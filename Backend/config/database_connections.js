@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config({ path: '../.env' });
 console.log('Password from env:', JSON.stringify(process.env.PG_PASSWORD));
 
 const { Pool } = require('pg');
