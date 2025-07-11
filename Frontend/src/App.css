@@ -1,0 +1,133 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-buttons {
+  margin: 20px 0;
+}
+
+.auth-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #61dafb;
+  color: #282c34;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.auth-buttons button.active {
+  background-color: #21a1c4;
+  color: white;
+}
+
+.auth-form {
+  background-color: white;
+  color: #282c34;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #61dafb;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button[type="submit"]:hover {
+  background-color: #21a1c4;
+  color: white;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #ff6b6b;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #ffe0e0;
+  border-radius: 5px;
+}
+
+.success {
+  color: #51cf66;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #e0ffe0;
+  border-radius: 5px;
+}
+
+.dashboard {
+  background-color: white;
+  color: #282c34;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.user-info {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.user-info p {
+  margin: 10px 0;
+}
+
+.logout-btn {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background-color: #ff5252;
+}
