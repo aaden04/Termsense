@@ -10,7 +10,6 @@ const Dashboard = ({ user, onLogout }) => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
 
- 
   useEffect(() => {
     fetchDocuments();
   }, []);
@@ -29,21 +28,13 @@ const Dashboard = ({ user, onLogout }) => {
     setLoading(true);
 
     try {
-      console.log('=== UPLOAD DEBUG INFO ===');
-      console.log('User ID:', user.id);
-      console.log('Title:', title);
-      console.log('Upload File:', uploadFile);
-      console.log('Upload Text length:', uploadText?.length);
-
       const formData = new FormData();
       formData.append('user_id', user.id);
       formData.append('title', title);
 
       if (uploadFile) {
-        console.log('Uploading file:', uploadFile.name, uploadFile.type, uploadFile.size);
         formData.append('document', uploadFile);
       } else if (uploadText) {
-        console.log('Uploading text, length:', uploadText.length);
         formData.append('text', uploadText);
       } else {
         alert('Please select a file or enter text');
@@ -51,33 +42,19 @@ const Dashboard = ({ user, onLogout }) => {
         return;
       }
 
-      // Log FormData contents
-      console.log('FormData contents:');
-      for (let [key, value] of formData.entries()) {
-        console.log(`  ${key}:`, typeof value === 'object' ? `File: ${value.name}` : value);
-      }
-
-      console.log('Making request to:', 'http://localhost:3000/user/documents/upload');
-
       const response = await axios.post('http://localhost:3000/user/documents/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log('SUCCESS! Response:', response.data);
       alert('Document uploaded successfully!');
       setTitle('');
       setUploadFile(null);
       setUploadText('');
-      fetchDocuments(); // Refresh the list
-      setActiveTab('documents'); // Switch to documents tab
+      fetchDocuments();
+      setActiveTab('documents');
     } catch (error) {
-      console.error('=== UPLOAD ERROR ===');
-      console.error('Error object:', error);
-      console.error('Error response:', error.response?.data);
-      console.error('Error status:', error.response?.status);
-      console.error('Error headers:', error.response?.headers);
       alert('Upload failed: ' + (error.response?.data?.error || 'Unknown error'));
     } finally {
       setLoading(false);
@@ -93,20 +70,20 @@ const Dashboard = ({ user, onLogout }) => {
 
       <div className="dashboard-content">
         <nav className="dashboard-nav">
-          <button 
-            className={activeTab === 'profile' ? 'active' : ''} 
+          <button
+            className={activeTab === 'profile' ? 'active' : ''}
             onClick={() => setActiveTab('profile')}
           >
             Profile
           </button>
-          <button 
-            className={activeTab === 'upload' ? 'active' : ''} 
+          <button
+            className={activeTab === 'upload' ? 'active' : ''}
             onClick={() => setActiveTab('upload')}
           >
             Upload Document
           </button>
-          <button 
-            className={activeTab === 'documents' ? 'active' : ''} 
+          <button
+            className={activeTab === 'documents' ? 'active' : ''}
             onClick={() => setActiveTab('documents')}
           >
             My Documents ({documents.length})
@@ -137,7 +114,6 @@ const Dashboard = ({ user, onLogout }) => {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
-
               <div className="form-group">
                 <label>Upload File:</label>
                 <input
@@ -146,7 +122,6 @@ const Dashboard = ({ user, onLogout }) => {
                   onChange={(e) => setUploadFile(e.target.files[0])}
                 />
               </div>
-
               <div className="form-group">
                 <label>Or paste text directly:</label>
                 <textarea
@@ -156,7 +131,6 @@ const Dashboard = ({ user, onLogout }) => {
                   rows="10"
                 />
               </div>
-
               <button type="submit" disabled={loading}>
                 {loading ? 'Uploading...' : 'Upload Document'}
               </button>

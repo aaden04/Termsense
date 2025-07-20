@@ -2,6 +2,7 @@ const express = require('express');
 const signupRoutes = require('./routes/signup');
 const loginRoutes = require('./routes/login');
 const cors = require('cors');
+const documentRoutes = require('./routes/documents');
 
 const app = express();
 const port = 3000;
@@ -27,6 +28,7 @@ app.get('/login', (req, res) => {
 
 app.use('/user', signupRoutes);
 app.use('/auth', loginRoutes);
+app.use('/user/documents', documentRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);

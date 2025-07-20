@@ -25,7 +25,7 @@ const Signup = ({ onSignupSuccess }) => {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhost:3000/signup', formData);
+      const response = await axios.post('http://localhost:3000/user/signup', formData);
       console.log('Signup successful:', response.data);
       setSuccess('Account created successfully! You can now login.');
       setFormData({ name: '', email: '', password: '' });

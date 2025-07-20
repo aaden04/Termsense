@@ -22,7 +22,7 @@ const Login = ({ onLoginSuccess }) => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:3000/login', formData);
+      const response = await axios.post('http://localhost:3000/auth/login', formData);
       console.log('Login successful:', response.data);
 
       console.log('Full response:', response.data);  

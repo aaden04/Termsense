@@ -1,3 +1,5 @@
+require('dotenv').config({ path: '../.env' });
+
 const db = require('../../Backend/config/database_connections');
 
 async function testConnection() {
