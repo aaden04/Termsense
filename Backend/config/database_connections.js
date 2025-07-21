@@ -1,5 +1,7 @@
 require('dotenv').config({ path: '../.env' });
 console.log('Password from env:', JSON.stringify(process.env.PG_PASSWORD));
+console.log('Gemini API Key:', process.env.GEMINI_API_KEY);
+
 
 const { Pool } = require('pg');
 

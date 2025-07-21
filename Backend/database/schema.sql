@@ -16,6 +16,9 @@ CREATE TABLE documents (
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   title TEXT,
   original_text TEXT NOT NULL,
+  file_name VARCHAR(255),
+  file_type VARCHAR(100),
+  file_data BYTEA,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
