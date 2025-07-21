@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt');
 const { createUser, getUserByEmail } = require('../services/userService');
 
 async function signup(req, res) {
-  console.log('Signup route hit');
-  
+
   try {
     const { name, email, password } = req.body;
     console.log({ name, email, password });

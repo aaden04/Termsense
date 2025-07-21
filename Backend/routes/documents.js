@@ -6,13 +6,6 @@ const { uploadDocument, getUserDocuments } = require('../controllers/documentCon
 const upload = multer({
   limits: {
     fileSize: 10 * 1024 * 1024,
-  },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('text/')) {
-      cb(null, true);
-    } else {
-      cb(new Error(`File type '${file.mimetype}' not allowed.`));
-    }
   }
 });
 
