@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = ({ onLoginSuccess }) => {
+const Login = ({ onLoginSuccess, onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -25,9 +25,6 @@ const Login = ({ onLoginSuccess }) => {
       const response = await axios.post('http://localhost:3000/auth/login', formData);
       console.log('Login successful:', response.data);
 
-      console.log('Full response:', response.data);  
-      console.log('User data:', response.data.user);  
-
       onLoginSuccess(response.data.user);
     } catch (error) {
       console.error('Login error:', error);
@@ -39,7 +36,9 @@ const Login = ({ onLoginSuccess }) => {
 
   return (
     <div className="auth-form">
-      <h2>Login</h2>
+      <img src="/logo.png" alt="Termsense Logo" className="logo" />
+      <h2>Welcome Back</h2>
+      <p className="subtitle">Sign in to your Termsense account</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -69,6 +68,10 @@ const Login = ({ onLoginSuccess }) => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+      
+      <div className="auth-switch">
+        <p>Don't have an account? <button type="button" onClick={onSwitchToSignup} className="link-btn">Sign up</button></p>
+      </div>
     </div>
   );
 };

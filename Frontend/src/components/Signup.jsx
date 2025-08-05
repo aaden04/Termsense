@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Signup = ({ onSignupSuccess }) => {
+const Signup = ({ onSignupSuccess, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -42,7 +42,9 @@ const Signup = ({ onSignupSuccess }) => {
 
   return (
     <div className="auth-form">
-      <h2>Sign Up</h2>
+      <img src="/logo.png" alt="Termsense Logo" className="logo" />
+      <h2>Create Account</h2>
+      <p className="subtitle">Join Termsense and start your journey</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -84,6 +86,10 @@ const Signup = ({ onSignupSuccess }) => {
           {loading ? 'Creating Account...' : 'Sign Up'}
         </button>
       </form>
+      
+      <div className="auth-switch">
+        <p>Already have an account? <button type="button" onClick={onSwitchToLogin} className="link-btn">Sign in</button></p>
+      </div>
     </div>
   );
 };

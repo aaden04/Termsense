@@ -8,11 +8,60 @@ const Dashboard = ({ user, onLogout }) => {
   const [uploadText, setUploadText] = useState('');
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('profile');
+  const [activeTab, setActiveTab] = useState('home');
   const [viewingDocument, setViewingDocument] = useState(null);
   const [examining, setExamining] = useState(false);
   const [examinationResult, setExaminationResult] = useState(null);
   const [activeExamination, setActiveExamination] = useState(null);
+
+  const formatExaminationResult = (text) => {
+    if (!text) return { mainContent: null, concerns: null };
+    
+    const sections = text.split(/\*\*(\d+\.\s*[^*]+)\*\*/g);
+    const formattedSections = [];
+    let concernsContent = null;
+    let isNextConcernsContent = false;
+    
+    for (let i = 0; i < sections.length; i++) {
+      if (i % 2 === 0) {
+        if (sections[i].trim()) {
+          const content = sections[i]
+            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*\s+([^*\n]+)/g, '<li>$1</li>')
+            .replace(/(\n|^)([A-Z][^:\n]*:)/g, '$1<h4>$2</h4>')
+            .split('\n')
+            .filter(line => line.trim())
+            .join('<br/>');
+          
+          const formattedContent = content.includes('<li>') ? `<ul>${content}</ul>` : content;
+          
+          if (isNextConcernsContent) {
+            concernsContent = formattedContent;
+            isNextConcernsContent = false;
+          } else {
+            formattedSections.push(formattedContent);
+          }
+        }
+      } else {
+        const heading = sections[i];
+        const isConcerns = heading.toLowerCase().includes('potential concerns') || 
+                          heading.toLowerCase().includes('concerns') ||
+                          heading.toLowerCase().includes('issues') ||
+                          heading.toLowerCase().includes('problems');
+        
+        if (isConcerns) {
+          isNextConcernsContent = true;
+        } else {
+          formattedSections.push(`<h3>${heading}</h3>`);
+        }
+      }
+    }
+    
+    return { 
+      mainContent: formattedSections,
+      concerns: concernsContent 
+    };
+  };
 
   useEffect(() => {
     fetchDocuments();
@@ -164,51 +213,134 @@ const Dashboard = ({ user, onLogout }) => {
       </header>
 
       <div className="dashboard-content">
-        <nav className="dashboard-nav">
-          <button
-            className={activeTab === 'profile' ? 'active' : ''}
-            onClick={() => setActiveTab('profile')}
-          >
-            Profile
-          </button>
-          <button
-            className={activeTab === 'upload' ? 'active' : ''}
-            onClick={() => setActiveTab('upload')}
-          >
-            Upload Document
-          </button>
-          <button
-            className={activeTab === 'documents' ? 'active' : ''}
-            onClick={() => setActiveTab('documents')}
-          >
-            My Documents ({documents.length})
-          </button>
-          {viewingDocument && (
-            <button
-              className={activeTab === 'view' ? 'active' : ''}
-              onClick={() => setActiveTab('view')}
-            >
-              Viewing: {viewingDocument.title}
+        {activeTab === 'upload' && (
+          <>
+            <button className="floating-home-btn" onClick={() => setActiveTab('home')}>
+              <span className="home-icon">🏠</span>
+              <span className="btn-text">Home</span>
             </button>
-          )}
-          {examinationResult && (
-            <button
-              className={activeTab === 'examination' ? 'active' : ''}
-              onClick={() => setActiveTab('examination')}
-            >
-              Examination Results
+            <button className="floating-docs-btn" onClick={() => setActiveTab('documents')}>
+              <span className="docs-icon">📋</span>
+              <span className="btn-text">My Documents ({documents.length})</span>
             </button>
-          )}
-        </nav>
+          </>
+        )}
 
-        {activeTab === 'profile' && (
-          <div className="profile-section">
-            <h2>Your Profile</h2>
-            <div className="user-info">
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Member since:</strong> {new Date(user.created_at).toLocaleDateString()}</p>
-              <p><strong>Documents uploaded:</strong> {documents.length}</p>
+        {activeTab === 'documents' && (
+          <button className="floating-home-btn-docs" onClick={() => setActiveTab('home')}>
+            <span className="home-icon">🏠</span>
+            <span className="btn-text">Home</span>
+          </button>
+        )}
+
+        {activeTab === 'view' && (
+          <>
+            <button className="floating-home-btn-view" onClick={() => setActiveTab('home')}>
+              <span className="home-icon">🏠</span>
+              <span className="btn-text">Home</span>
+            </button>
+            <button className="floating-upload-btn-view" onClick={() => setActiveTab('upload')}>
+              <span className="upload-icon">📤</span>
+              <span className="btn-text">Upload</span>
+            </button>
+          </>
+        )}
+
+        {activeTab === 'examination' && (
+          <>
+            <button className="floating-home-btn-exam" onClick={() => setActiveTab('home')}>
+              <span className="home-icon">🏠</span>
+              <span className="btn-text">Home</span>
+            </button>
+            <button className="floating-upload-btn-exam" onClick={() => setActiveTab('upload')}>
+              <span className="upload-icon">📤</span>
+              <span className="btn-text">Upload</span>
+            </button>
+          </>
+        )}
+
+        {activeTab === 'home' && (
+          <div className="home-section">
+            <div className="profile-header">
+              <div className="profile-card-header">
+                <div className="profile-info-header">
+                  <h3>👤 {user.name}</h3>
+                  <p className="email-header">{user.email}</p>
+                </div>
+                <div className="tagline-section">
+                  <h4 className="app-tagline">Legal Document Intelligence</h4>
+                  <p className="tagline-subtitle">Powered by AI</p>
+                </div>
+                <div className="stats-header">
+                  <div className="stat-header">
+                    <span className="stat-number-header">{documents.length}</span>
+                    <span className="stat-label-header">Documents</span>
+                  </div>
+                  <div className="stat-header">
+                    <span className="stat-number-header">{new Date(user.created_at).toLocaleDateString()}</span>
+                    <span className="stat-label-header">Member since</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="main-content-centered">
+                <div className="welcome-message">
+                  <h2>Welcome to Termsense</h2>
+                  <p className="app-description">
+                    Your intelligent legal document examination platform. Upload contracts, agreements, 
+                    and legal documents to get comprehensive analysis and insights. Termsense helps you 
+                    identify key terms, potential issues, and important clauses in your legal documents.
+                  </p>
+                </div>
+
+                <div className="quick-actions">
+                  <h3>Quick Actions</h3>
+                  <div className="action-cards">
+                    <div className="action-card" onClick={() => setActiveTab('upload')}>
+                      <div className="card-icon">📤</div>
+                      <h4>Upload Document</h4>
+                      <p>Add a new legal document for examination</p>
+                    </div>
+                    <div className="action-card" onClick={() => setActiveTab('documents')}>
+                      <div className="card-icon">📋</div>
+                      <h4>My Documents</h4>
+                      <p>View and manage your uploaded documents ({documents.length})</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="recent-activity">
+                  <h3>Recent Activity</h3>
+                  {documents.length === 0 ? (
+                    <div className="no-activity">
+                      <p>🎯 Start by uploading your first legal document to begin your examination journey!</p>
+                    </div>
+                  ) : (
+                    <div className="activity-list">
+                      {documents.slice(0, 3).map((doc) => (
+                        <div key={doc.id} className="activity-item">
+                          <span className="activity-icon">📄</span>
+                          <div className="activity-info">
+                            <strong>{doc.title}</strong>
+                            <small>Uploaded {new Date(doc.created_at).toLocaleDateString()}</small>
+                          </div>
+                          <button onClick={() => viewDocument(doc)} className="view-btn">View</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="tips-section">
+                  <h3>💡 Pro Tips</h3>
+                  <ul className="tips-list">
+                    <li>Upload text files (.txt) for best examination results</li>
+                    <li>Use descriptive titles for your documents to stay organised</li>
+                    <li>Review examination results carefully for legal insights</li>
+                    <li>Keep your documents organised by uploading regularly</li>
+                  </ul>
+                </div>
             </div>
           </div>
         )}
@@ -315,17 +447,40 @@ const Dashboard = ({ user, onLogout }) => {
               <h2>📋 Document Examination Results</h2>
               <button onClick={closeExaminationView} className="close-btn">← Back to Documents</button>
             </div>
-            <div className="examination-metadata">
-              <p><strong>Examined:</strong> {new Date(examinationResult.timestamp).toLocaleString()}</p>
-              <p><strong>Document ID:</strong> {examinationResult.documentId}</p>
-            </div>
-            <div className="examination-content">
-              <div className="examination-result">
-                <pre>{examinationResult.examination}</pre>
+            
+            <div className="examination-container">
+              {formatExaminationResult(examinationResult.examination)?.concerns && (
+                <div className="examination-sidebar">
+                  <div className="concerns-card">
+                    <h3>⚠️ Potential Concerns</h3>
+                    <div 
+                      className="concerns-content"
+                      dangerouslySetInnerHTML={{ __html: formatExaminationResult(examinationResult.examination).concerns }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="examination-content-card">
+                <div className="examination-metadata-inline">
+                  <span className="metadata-inline">Examined: {new Date(examinationResult.timestamp).toLocaleString()}</span>
+                  <span className="metadata-inline">Document ID: {examinationResult.documentId}</span>
+                </div>
+                <h3>🔍 Analysis Results</h3>
+                <div className="examination-result">
+                  {formatExaminationResult(examinationResult.examination)?.mainContent?.map((section, index) => (
+                    <div 
+                      key={index} 
+                      className="result-section"
+                      dangerouslySetInnerHTML={{ __html: section }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+            
             <div className="examination-actions">
-              <button onClick={closeExaminationView}>Close</button>
+              <button onClick={closeExaminationView}>Close Analysis</button>
             </div>
           </div>
         )}

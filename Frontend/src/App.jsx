@@ -21,31 +21,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Termsense</h1>
-        
-        {!user && (
-          <div className="auth-buttons">
-            <button 
-              onClick={() => setCurrentView('login')}
-              className={currentView === 'login' ? 'active' : ''}
-            >
-              Login
-            </button>
-            <button 
-              onClick={() => setCurrentView('signup')}
-              className={currentView === 'signup' ? 'active' : ''}
-            >
-              Signup
-            </button>
-          </div>
-        )}
-
         {currentView === 'login' && !user && (
-          <Login onLoginSuccess={handleLoginSuccess} />
+          <Login onLoginSuccess={handleLoginSuccess} onSwitchToSignup={() => setCurrentView('signup')} />
         )}
         
         {currentView === 'signup' && !user && (
-          <Signup onSignupSuccess={() => setCurrentView('login')} />
+          <Signup onSignupSuccess={() => setCurrentView('login')} onSwitchToLogin={() => setCurrentView('login')} />
         )}
         
         {user && (

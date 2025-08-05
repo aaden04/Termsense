@@ -3,9 +3,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(135deg, #F7F9FA 0%, #e8f4f8 100%);
   padding: 20px;
-  color: white;
+  color: #2D3436;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,84 +19,160 @@
 
 .auth-buttons button {
   margin: 0 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #61dafb;
-  color: #282c34;
-  border-radius: 5px;
+  padding: 12px 24px;
+  border: 2px solid #2C3E50;
+  background-color: transparent;
+  color: #2C3E50;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background-color: #2C3E50;
+  color: white;
 }
 
 .auth-buttons button.active {
-  background-color: #21a1c4;
+  background-color: #2C3E50;
   color: white;
 }
 
 .auth-form {
   background-color: white;
-  color: #282c34;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #2D3436;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  border: 1px solid rgba(44, 62, 80, 0.1);
+}
+
+.auth-form .logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-form h2 {
+  color: #2C3E50;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.auth-form .subtitle {
+  color: #2D3436;
+  font-size: 16px;
+  margin-bottom: 32px;
+  opacity: 0.8;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
   font-size: 16px;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  background-color: #F7F9FA;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #61dafb;
+  border-color: #16A085;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.1);
+}
+
+.form-group input::placeholder {
+  color: #95a5a6;
 }
 
 button[type="submit"] {
   width: 100%;
-  padding: 12px;
-  background-color: #61dafb;
-  color: #282c34;
+  padding: 16px;
+  background: linear-gradient(135deg, #2C3E50 0%, #34495e 100%);
+  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 8px;
 }
 
 button[type="submit"]:hover {
-  background-color: #21a1c4;
-  color: white;
+  background: linear-gradient(135deg, #34495e 0%, #2C3E50 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
 }
 
 button[type="submit"]:disabled {
-  background-color: #ccc;
+  background-color: #bdc3c7;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .error {
-  color: #ff6b6b;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #ffe0e0;
-  border-radius: 5px;
+  color: #e74c3c;
+  margin: 16px 0;
+  padding: 12px;
+  background-color: #fdf2f2;
+  border-radius: 8px;
+  border-left: 4px solid #e74c3c;
+  font-size: 14px;
 }
 
 .success {
-  color: #51cf66;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #e0ffe0;
-  border-radius: 5px;
+  color: #16A085;
+  margin: 16px 0;
+  padding: 12px;
+  background-color: #f0f9f7;
+  border-radius: 8px;
+  border-left: 4px solid #16A085;
+  font-size: 14px;
+}
+
+.auth-switch {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.auth-switch p {
+  color: #2D3436;
+  font-size: 14px;
+  margin: 0;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #16A085;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.link-btn:hover {
+  color: #2C3E50;
+  text-decoration: underline;
 }
 
 .dashboard {
