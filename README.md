@@ -233,21 +233,5 @@ For optimal examination results, copy and paste document text directly into the 
 - File upload size limits (10MB default)
 - Input validation and sanitization
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 🆘 Support
-
-For issues and questions:
-1. Check existing documentation
-2. Review error logs in console
-3. Verify environment configuration
-4. Test database connectivity
-
----
 
