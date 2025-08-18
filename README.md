@@ -1,5 +1,7 @@
 # Termsense
 
+### DEMO : https://youtu.be/ChUqDzS5ow0
+
 **Legal Document Intelligence Platform** - AI-powered legal document examination and analysis tool.
 
 ## 🏗️ Architecture Overview
@@ -16,7 +18,7 @@ Termsense is built as a full stack application with separate frontend and backen
 - **Environment:** dotenv for configuration
 
 ### Frontend Stack
-- **Framework:** React 19.1.0
+- **Framework:** React 
 - **Build Tool:** React Scripts (Create React App)
 - **HTTP Client:** Axios
 - **Styling:** Custom CSS with modern gradients and responsive design
@@ -68,7 +70,7 @@ Termsense/
 ## 🚀 Installation & Setup
 
 ### Prerequisites
-- Node.js (v16+ recommended)
+- Node.js
 - PostgreSQL database
 - Google Gemini AI API key
 
